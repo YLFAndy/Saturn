@@ -1137,7 +1137,7 @@ module SCU (
 			end
 			case (CBUS_ST)
 				CBUS_IDLE: if (CE_R) begin
-					if ((DMA_READ_C && !DMA_WRITE_C && (!DMA_WRITE_A || ABUS_ST == ABUS_IDLE) && (!DMA_WRITE_B || BBUS_ST == BBUS_IDLE) && CBRLS) || 
+					if ((DMA_READ_C && !DMA_WRITE_C && !DMA_WA_ERR && (!DMA_WRITE_A || ABUS_ST == ABUS_IDLE) && (!DMA_WRITE_B || BBUS_ST == BBUS_IDLE) && CBRLS) || 
 					    (DMA_WRITE_C && !DMA_READ_C && !DMA_RA_ERR && (!DMA_READ_A || ABUS_ST == ABUS_IDLE) && (!DMA_READ_B || BBUS_ST == BBUS_IDLE) && CBRLS)) begin
 						CBUS_REQ <= 1;
 						CBUS_ST <= CBUS_REQUEST;
@@ -1650,6 +1650,8 @@ module SCU (
 						DMA_WRITE_C <= 0;
 						DMA_READ_DSP <= 0;
 						DMA_WRITE_DSP <= 0;
+						DMA_RA_ERR <= 0;
+						DMA_WA_ERR <= 0;
 						DSTA.DACSA <= 0;
 						DSTA.DACSB <= 0;
 						DSTA.DACSD <= 0;
